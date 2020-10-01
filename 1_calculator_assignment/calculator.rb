@@ -148,6 +148,7 @@ loop do
   clean_screen
 end
 
-prompt(messages('goodbye', lang))
+prompt(format(messages('goodbye', lang), name: name))
+
 sleep 3
 clean_screen

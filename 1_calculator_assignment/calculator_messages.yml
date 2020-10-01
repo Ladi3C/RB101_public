@@ -18,7 +18,7 @@ en:
     => Questa non è un'opzione valida. Prego entra:
                           4 per Italiano
   name: "Please enter your name:" 
-  valid_name: "Make sure to enter a valid name thats consists of only letters."
+  valid_name: "Make sure to enter a valid name that consists of only letters."
   greeting: "Hello %{name}!"
   first_num: "Please enter the first number:"
   valid_number: "That is not a valid number. Please try again."
@@ -35,7 +35,7 @@ en:
     => Please choose a different second number or operation 1, 2, or 3."
   adding: ". . . . Adding the two numbers . . . ."
   subtracting: ". . . . Subtracting the two numbers . . . ."
-  multiplying: ". . . . Multiplying the two numbeers . . . ."
+  multiplying: ". . . . Multiplying the two numbers . . . ."
   dividing: ". . . . Dividing the two numbers . . . ."
   result: "The result is %{result}"
   again: |
@@ -43,7 +43,7 @@ en:
        Please enter Y for yes.
        Please enter N for no.
   invalid_response: "Invalid answer. You must enter Y for YES or N for NO"
-  goodbye: "Thank you for using Calculator! Have a great day!"
+  goodbye: "Thank you for using Calculator %{name}! Have a great day!"
 es: 
   name: "Por favor ingrese su nombre:"
   valid_name: "Asegúrese de ingresar un nombre válido que consista solo de letras."
