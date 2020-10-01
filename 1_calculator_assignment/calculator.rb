@@ -1,6 +1,8 @@
 require 'yaml'
 MESSAGES = YAML.load_file('calculator_messages.yml')
 
+# Method Definitions
+
 def clean_screen
   system('clear') || system('cls')
 end
