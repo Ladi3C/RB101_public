@@ -1,0 +1,43 @@
+=begin
+
+Problem: Write a method that takes one argument, an array containing integers,
+         and returns the average of all numbers in the array. The array will never 
+         be empty and the numbers will always be positive integers. Your result should 
+         also be an integer.
+
+Examples: puts average([1, 6]) == 3 # integer division: (1 + 6) / 2 -> 3
+          puts average([1, 5, 87, 45, 8, 8]) == 25
+          puts average([9, 47, 23, 95, 16, 52]) == 40
+
+Algorithm:
+
+- write a method average
+- takes one argument, an array with integers
+- RETURNS the average of all numbers in the array 
+
+
+
+
+=end 
+
+def average(numbers)
+  sum = 0
+  divisor = numbers.size
+  counter = 0
+
+  loop do
+    break if counter == numbers.size
+
+    current_num = numbers[counter]
+    sum += current_num
+
+    counter += 1
+  end
+
+  sum/divisor
+end
+
+
+puts average([1, 6]) == 3 # integer division: (1 + 6) / 2 -> 3
+puts average([1, 5, 87, 45, 8, 8]) == 25
+puts average([9, 47, 23, 95, 16, 52]) == 40
