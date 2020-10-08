@@ -65,7 +65,7 @@ es:
   subtracting: ". . . . Restando los dos numeros . . . ."
   multiplying: ". . . . Multiplicando los dos numeros . . . ."
   dividing: ". . . . Dividiendo los dos numeros . . . ."
-  result: "El resultado es %{result}."
+  result: "El resultado es %{result}"
   again: |
     ¿Le gustaría hacer otro cálculo? 
         Por favor ingrese S para SI.
@@ -93,7 +93,7 @@ fr:
   subtracting: ". . . . Soustraire les deux nombres . . . ."
   multiplying: ". . . . Multiplier les deux nombres. . . ."
   dividing: ". . . . Diviser les deux nombres. . . ."
-  result: "Le résultat est %{result}."
+  result: "Le résultat est %{result}"
   again: |
     Voulez-vous utiliser à nouveau la calculatrice?
         Entrez O pour OUI.
@@ -121,7 +121,7 @@ it:
   subtracting: ". . . . Sottraendo i due numeri . . . ."
   multiplying: ". . . . Moltiplicando i due numeri . . . ."
   dividing: ". . . . Dividendo i due numeri . . . ."
-  result: "Il risultato è %{result}."
+  result: "Il risultato è %{result}"
   again: |
     Vuoi eseguire un altro calcolo? 
         Immettere S per SI.
