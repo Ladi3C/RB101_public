@@ -23,6 +23,7 @@ statement_hash = {}
 counter = 0
 new_statement = statement.delete(" ").split("").sort
 
+
 loop do
   break if counter == new_statement.size
 
@@ -31,6 +32,5 @@ loop do
 
   counter += 1
 end 
-
 p statement_hash
  

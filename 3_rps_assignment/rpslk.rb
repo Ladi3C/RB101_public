@@ -142,7 +142,7 @@ loop do
 
     break if score_tracker[:player] == MAX_WINS ||
              score_tracker[:computer] == MAX_WINS
-  end
+    end 
   answer = ''
   loop do
     prompt("Would you like to play the tournament again?")
