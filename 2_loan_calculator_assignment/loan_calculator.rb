@@ -15,60 +15,119 @@ def valid_confirmation?(answer)
   ['y', 'n'].include?(answer)
 end
 
-prompt(MESSAGES['welcome'])
+def display_welcome
+  prompt(MESSAGES['welcome'])
+end 
 
+def get_name
 prompt(MESSAGES['name'])
-
 name = ''
-loop do
-  name = Kernel.gets().chomp().strip().capitalize()
+  loop do
+    name = Kernel.gets().chomp().strip().capitalize()
 
-  break unless name.empty? || name =~ /\d/
-  prompt(MESSAGES['valid_name'])
+    break unless name.empty? || name =~ /\d/
+    prompt(MESSAGES['valid_name'])
+  end
+  name
+end 
+
+def display_greeting(user_name)
+  prompt(format(MESSAGES['greeting'], name: user_name))
 end
 
-prompt(format(MESSAGES['greeting'], name: name))
+def display_loan_prompt
+  prompt(MESSAGES['loan_amount'])
+end 
+
+def get_loan_amount
+  loan_amount = ''
+  loop do
+    loan_amount = Kernel.gets().chomp().strip()
+    loan_amount.slice!(0) if loan_amount.start_with?('$')
+
+    break if valid_number?(loan_amount)
+    prompt(MESSAGES['valid_number'])
+  end
+loan_amount
+end
+
+def display_apr_prompt
+  prompt(MESSAGES['apr_msg'])
+end 
+
+def get_apr
+  apr = ''
+  loop do
+    apr = Kernel.gets().chomp().strip()
+    apr.chop! if apr.end_with?('%')
+
+    break if valid_number?(apr)
+    prompt(MESSAGES['valid_number'])
+    end
+  apr
+end 
+
+def display_loan_duration_prompt
+  prompt(MESSAGES['loan_duration_msg'])
+end 
+
+def get_loan_duration
+  loan_duration = ''
+  loop do
+    loan_duration = Kernel.gets().chomp().strip()
+
+    break if valid_number?(loan_duration)
+    prompt(MESSAGES['valid_number'])
+  end
+  loan_duration
+end 
+
+def confirm_loan_prompt(loan)
+  prompt(format(MESSAGES['loan_confirmation'], loan_amount: loan))
+end
+
+def confirm_apr_prompt(annual_percentage)
+  prompt(format(MESSAGES['apr_confirmation'], apr: annual_percentage))
+end
+
+def confirm_duration_prompt(duration)
+  prompt(format(MESSAGES['duration_conf'], loan_duration: duration))
+end 
+
+def confirmation_prompt
+  prompt(MESSAGES['confirmation_msg'])
+end  
+
+display_welcome
+name = get_name
+
+display_greeting(name)
 
 loop do
   loan_amount = ''
   apr = ''
   loan_duration = ''
   loop do
-    prompt(MESSAGES['loan_amount'])
+    display_loan_prompt
+    loan_amount = get_loan_amount
 
-    loop do
-      loan_amount = Kernel.gets().chomp().strip()
-      loan_amount.slice!(0) if loan_amount.start_with?('$')
+    display_apr_prompt
+    apr = get_apr
 
-      break if valid_number?(loan_amount)
-      prompt(MESSAGES['valid_number'])
-    end
-
-    prompt(MESSAGES['apr_msg'])
-
-    loop do
-      apr = Kernel.gets().chomp().strip()
-      apr.chop! if apr.end_with?('%')
-
-      break if valid_number?(apr)
-      prompt(MESSAGES['valid_number'])
-    end
-
-    prompt(MESSAGES['loan_duration_msg'])
-
-    loop do
-      loan_duration = Kernel.gets().chomp().strip()
-
-      break if valid_number?(loan_duration)
-      prompt(MESSAGES['valid_number'])
-    end
+    display_loan_duration_prompt
+    loan_duration = get_loan_duration
 
     system 'clear'
 
-    prompt(format(MESSAGES['loan_confirmation'], loan_amount: loan_amount))
-    prompt(format(MESSAGES['apr_confirmation'], apr: apr))
-    prompt(format(MESSAGES['duration_conf'], loan_duration: loan_duration))
-    prompt(MESSAGES['confirmation_msg'])
+    confirm_loan_prompt(loan_amount)
+    confirm_apr_prompt(apr)
+    confirm_duration_prompt(loan_duration)
+    confirmation_prompt
+
+    # prompt(format(MESSAGES['loan_confirmation'], loan_amount: loan_amount))
+    # prompt(format(MESSAGES['apr_confirmation'], apr: apr))
+    # prompt(format(MESSAGES['duration_conf'], loan_duration: loan_duration))
+    # prompt(MESSAGES['confirmation_msg'])
 
     confirmation = ''
     loop do
