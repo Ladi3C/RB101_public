@@ -1,7 +1,9 @@
 require 'yaml'
 MESSAGES = YAML.load_file('loan_calculator.yml')
 
-system 'clear'
+def clean_screen
+  system('clear') || system('cls')
+end
 
 def prompt(message)
   Kernel.puts("=> #{message}")
@@ -16,12 +18,13 @@ def valid_confirmation?(answer)
 end
 
 def display_welcome
+  clean_screen
   prompt(MESSAGES['welcome'])
-end 
+end
 
 def get_name
-prompt(MESSAGES['name'])
-name = ''
+  prompt(MESSAGES['name'])
+  name = ''
   loop do
     name = Kernel.gets().chomp().strip().capitalize()
 
@@ -29,7 +32,7 @@ name = ''
     prompt(MESSAGES['valid_name'])
   end
   name
-end 
+end
 
 def display_greeting(user_name)
   prompt(format(MESSAGES['greeting'], name: user_name))
@@ -37,7 +40,7 @@ end
 
 def display_loan_prompt
   prompt(MESSAGES['loan_amount'])
-end 
+end
 
 def get_loan_amount
   loan_amount = ''
@@ -48,12 +51,12 @@ def get_loan_amount
     break if valid_number?(loan_amount)
     prompt(MESSAGES['valid_number'])
   end
-loan_amount
+  loan_amount
 end
 
 def display_apr_prompt
   prompt(MESSAGES['apr_msg'])
-end 
+end
 
 def get_apr
   apr = ''
@@ -63,13 +66,13 @@ def get_apr
 
     break if valid_number?(apr)
     prompt(MESSAGES['valid_number'])
-    end
+  end
   apr
-end 
+end
 
 def display_loan_duration_prompt
   prompt(MESSAGES['loan_duration_msg'])
-end 
+end
 
 def get_loan_duration
   loan_duration = ''
@@ -80,7 +83,7 @@ def get_loan_duration
     prompt(MESSAGES['valid_number'])
   end
   loan_duration
-end 
+end
 
 def confirm_loan_prompt(loan)
   prompt(format(MESSAGES['loan_confirmation'], loan_amount: loan))
@@ -92,11 +95,65 @@ end
 
 def confirm_duration_prompt(duration)
   prompt(format(MESSAGES['duration_conf'], loan_duration: duration))
-end 
+end
 
 def confirmation_prompt
   prompt(MESSAGES['confirmation_msg'])
-end  
+end
+
+def get_confirmation
+  confirmation = ''
+  loop do
+    confirmation = Kernel.gets().chomp().downcase()
+    break if valid_confirmation?(confirmation)
+    prompt(MESSAGES['invalid_confirmation'])
+  end
+  confirmation
+end
+
+def input_to_float(input)
+  input.to_f
+end
+
+def input_to_integer(input)
+  input.to_i
+end
+
+def monthly_interest_rate(annual_percentage, loan)
+  annual_percentage / loan
+end
+
+def monthly_calculation(loan, monthly_interest, duration)
+  loan * (monthly_interest / (1 - (1 + monthly_interest)**(-duration)))
+end
+
+def display_result(month_payment)
+  prompt(format(MESSAGES['result'], monthly_payment: month_payment.round(2)))
+end
+
+def another_calculation_prompt
+  prompt(MESSAGES["another_calculation"])
+end
+
+def get_another_calculation
+  response = ''
+  loop do
+    response = Kernel.gets().chomp().downcase()
+    break if valid_confirmation?(response)
+    prompt(MESSAGES['invalid_confirmation'])
+  end
+  response
+end
+
+def yes_response?(res)
+  res == 'y'
+end
+
+def display_goodbye(user_name)
+  clean_screen
+  prompt(format(MESSAGES['goodbye'], name: user_name))
+  sleep 5
+end
 
 display_welcome
 name = get_name
@@ -117,49 +174,33 @@ loop do
     display_loan_duration_prompt
     loan_duration = get_loan_duration
 
-    system 'clear'
+    clean_screen
 
     confirm_loan_prompt(loan_amount)
     confirm_apr_prompt(apr)
     confirm_duration_prompt(loan_duration)
     confirmation_prompt
 
-    # prompt(format(MESSAGES['loan_confirmation'], loan_amount: loan_amount))
-    # prompt(format(MESSAGES['apr_confirmation'], apr: apr))
-    # prompt(format(MESSAGES['duration_conf'], loan_duration: loan_duration))
-    # prompt(MESSAGES['confirmation_msg'])
-
-    confirmation = ''
-    loop do
-      confirmation = Kernel.gets().chomp().downcase()
-      break if valid_confirmation?(confirmation)
-      prompt(MESSAGES['invalid_confirmation'])
-    end
+    confirmation = get_confirmation
 
     break if confirmation == 'y'
-    system 'clear'
+    clean_screen
   end
 
-  loan_amount = loan_amount.to_f
-  apr = apr.to_f
-  loan_duration = loan_duration.to_i
+  loan_amount = input_to_float(loan_amount)
+  apr = input_to_float(apr)
+  loan_duration = input_to_integer(loan_duration)
 
-  mir = apr / loan_amount
+  mir = monthly_interest_rate(apr, loan_amount)
+  monthly_payment = monthly_calculation(loan_amount, mir, loan_duration)
 
-  monthly_payment = loan_amount * (mir / (1 - (1 + mir)**(-loan_duration)))
+  display_result(monthly_payment)
 
-  prompt(format(MESSAGES['result'], monthly_payment: monthly_payment.round(2)))
-  prompt(MESSAGES["another_calculation"])
+  another_calculation_prompt
+  response = get_another_calculation
 
-  response = ''
-  loop do
-    response = Kernel.gets().chomp().downcase()
-    break if valid_confirmation?(response)
-    prompt(MESSAGES['invalid_confirmation'])
-  end
-
-  break unless response == 'y'
-  system 'clear'
+  break unless yes_response?(response)
+  clean_screen
 end
 
-prompt(format(MESSAGES['goodbye'], name: name))
+display_goodbye(name)
