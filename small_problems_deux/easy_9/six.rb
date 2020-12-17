@@ -13,6 +13,7 @@ Problem:
 =end
 
 def word_lengths(strings)
+<<<<<<< HEAD
   lengths = strings.split.map { |string| string.length}.map(&:to_s)
   lengths_arr =[]
   counter = 0
@@ -23,6 +24,13 @@ def word_lengths(strings)
     counter += 1
   end
 lengths_arr
+=======
+  lengths = []
+  strings.split.each do |string|
+    lengths << string.length
+  end
+  p lengths
+>>>>>>> origin/master
 end
 
 p word_lengths("cow sheep chicken") #== ["cow 3", "sheep 5", "chicken 7"]
@@ -34,6 +42,7 @@ p word_lengths("Supercalifragilisticexpialidocious") #==
 p word_lengths("") #== []
 
 
+<<<<<<< HEAD
 p word_lengths("cow sheep chicken") == ["cow 3", "sheep 5", "chicken 7"]
 p word_lengths("baseball hot dogs and apple pie") ==
   ["baseball 8", "hot 3", "dogs 4", "and 3", "apple 5", "pie 3"]
@@ -41,3 +50,12 @@ p word_lengths("It ain't easy, is it?") == ["It 2", "ain't 5", "easy, 5", "is 2"
 p word_lengths("Supercalifragilisticexpialidocious") ==
   ["Supercalifragilisticexpialidocious 34"]
 p word_lengths("") == []
+=======
+# p word_lengths("cow sheep chicken") == ["cow 3", "sheep 5", "chicken 7"]
+# p word_lengths("baseball hot dogs and apple pie") ==
+#   ["baseball 8", "hot 3", "dogs 4", "and 3", "apple 5", "pie 3"]
+# p word_lengths("It ain't easy, is it?") == ["It 2", "ain't 5", "easy, 5", "is 2", "it? 3"]
+# p word_lengths("Supercalifragilisticexpialidocious") ==
+#   ["Supercalifragilisticexpialidocious 34"]
+# p word_lengths("") == []
+>>>>>>> origin/master
