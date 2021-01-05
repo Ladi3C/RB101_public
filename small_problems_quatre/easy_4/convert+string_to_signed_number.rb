@@ -20,7 +20,7 @@ NUMBERS = {
 
 
 def string_to_integer(string)
-  num_arr = string.delete('^0-9').chars.map { |letter| NUMBERS[letter]}
+  num_arr = string.delete('^0-9').chars.map { |letter| NUMBERS[letter] }
   value = 0
   num_arr.each { |num| value = 10 * value + num }
   value
